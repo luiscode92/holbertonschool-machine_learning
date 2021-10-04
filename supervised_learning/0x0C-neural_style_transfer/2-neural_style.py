@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Create a class NST that performs tasks for neural style transfer
-and loads the model for neural style transfer
+Create a class NST that performs tasks for neural style transfer,
+loads the model for neural style transfer
+and calculates gram matrices
 """
 
 
@@ -30,5 +31,13 @@ class NST:
     def load_model(self):
         """
         Loads the model for neural style transfer
+        """
+        return None
+
+    @staticmethod
+    def gram_matrix(input_layer):
+        """
+        Returns: a tf.Tensor of shape (1, c, c)
+        containing the gram matrix of input_layer
         """
         return None
