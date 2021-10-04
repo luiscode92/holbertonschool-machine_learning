@@ -1,11 +1,8 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import tensorflow as tf
 import numpy as np
 
 tf.enable_eager_execution()
-
-
 class NST:
     """
     Create a class NST that performs tasks for neural style transfer:
@@ -45,56 +42,3 @@ class NST:
     def __init__(self, style_image, content_image, alpha=1e4, beta=1):
         """
         Init method for the Class
-        initialize the variables
-        """
-        if type(style_image) is not np.ndarray or style_image.ndim != 3 \
-                or style_image.shape[2] != 3:
-            raise TypeError('style_image must be a numpy.ndarray with shape \
-                            (h, w, 3)')
-        if type(content_image) is not np.ndarray or content_image.ndim != 3 \
-                or content_image.shape[2] != 3:
-            raise TypeError('content_image must be a numpy.ndarray with shape \
-                            (h, w, 3)')
-        if type(alpha) is not int and type(alpha) is not float or alpha < 0:
-            raise TypeError("alpha must be a non-negative number")
-        if type(beta) is not int and type(beta) is not float or beta < 0:
-            raise TypeError("beta must be a non-negative number")
-
-        self.style_image = self.scale_image(style_image)
-        self.content_image = self.scale_image(content_image)
-        self.alpha = alpha
-        self.beta = beta
-
-    @staticmethod
-    def scale_image(image):
-        """
-        Static Method: def scale_image(image): that rescales an image such
-        that its pixels values are between 0 and 1 and its largest side is 512
-        pixels
-        image - a numpy.ndarray of shape (h, w, 3) containing the image to be
-        scaled
-        -if image is not a np.ndarray with the shape (h, w, 3), raise a
-        TypeError with the message image must be a numpy.ndarray with shape
-        (h, w, 3)
-        The scaled image should be a tf.tensor with the shape (1, h_new,
-        w_new, 3) where max(h_new, w_new) == 512 and min(h_new, w_new) is
-        scaled proportionately
-        The image should be resized using bicubic interpolation
-        After resizing, the image’s pixel values should be rescaled from the
-        range [0, 255] to [0, 1].
-        Returns: the scaled image
-        """
-        if type(image) is not np.ndarray or image.ndim != 3 \
-                or image.shape[2] != 3:
-            raise TypeError('image must be a numpy.ndarray with shape \
-                            (h, w, 3)')
-        h, w, _ = image.shape
-        max_dim = 512 * (200, 100)
-        maximun = max(h, w)
-        scale = max_dim / maximun
-        new_shape = (int(h * scale), int(w * scale))
-        image = np.expand_dims(image, axis=0)
-        scaled_image = tf.image.resize_bicubic(image, new_shape)
-        scaled_image = tf.clip_by_value(scaled_image / 255, 0, 1)
-
-        return scaled_image
