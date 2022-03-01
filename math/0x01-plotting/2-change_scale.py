@@ -7,6 +7,8 @@ r = np.log(0.5)
 t = 5730
 y = np.exp((r / t) * x)
 
+# your code here
+
 plt.plot(x, y)
 plt.xlabel('Time (years)')
 plt.ylabel('Fraction Remaining')
